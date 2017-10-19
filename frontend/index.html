@@ -51,12 +51,15 @@
 
         connectedCallback() {
           super.connectedCallback();
-
+          this.scores = []
           this.loadScores()
         }
 
         loadScores() {
-          fetch(this.url).then(res => res.json()).then(scrores => this.scores = scores)
+          fetch(this.url).then(res => res.json()).then(scores => {
+            this.scores = scores
+            console.log(scores)
+          })
           setTimeout(this.loadScores.bind(this), (this.fetchinterval || 60) * 1000)
         }
 
