@@ -1,0 +1,69 @@
+<dom-module id="marcel-plugin-code-heroe">
+  <template>
+    <style>
+      #container {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .line {
+        display: flex;
+        width: 100%;
+        border-bottom: 1px black solid;
+      }
+
+      .line:last-of-type {
+        border-bottom: red;
+      }
+
+      .line>div {
+        padding: 1em;
+      }
+
+      .name {
+        flex: 1;
+      }
+    </style>
+    <div id="container">
+      <template is="dom-repeat" items="[[scores]]">
+        <div class="line">
+          <div class="place">{{index}}</div>
+          <div class="name">{{item.name}}</div>
+          <div class="score">{{item.score}}</div>
+        </div>
+      </template>
+    </div>
+  </template>
+
+  <script>
+    (() => {
+      class CodeHero extends Polymer.Element {
+        static get is() { return 'marcel-plugin-code-heroe' }
+        static get properties() {
+          return {
+            url: String,
+            rows: Number,
+            fetchinterval: Number
+          }
+        }
+
+        connectedCallback() {
+          super.connectedCallback();
+
+          this.loadScores()
+        }
+
+        loadScores() {
+          fetch(this.url).then(res => res.json()).then(scrores => this.scores = scores)
+          setTimeout(this.loadScores.bind(this), (this.fetchinterval || 60) * 1000)
+        }
+
+      }
+
+
+      customElements.define(CodeHero.is, CodeHero);
+    })();
+  </script>
+</dom-module>
