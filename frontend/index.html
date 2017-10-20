@@ -10,6 +10,8 @@
 
       h2 {
         text-align: center;
+        margin-top: 0.5em;
+        margin-bottom: 0.5em;
       }
 
       .line {
@@ -24,6 +26,8 @@
 
       .line>div {
         padding: 1em;
+        padding-top: 0.5em;
+        padding-bottom: 0.5em;
       }
 
       .name {
@@ -62,7 +66,7 @@
 
         loadScores() {
           fetch(this.url).then(res => res.json()).then(scores => {
-            this.scores = scores.map((score, index) => ({ ...score, place: index + 1 }))
+            this.scores = scores.slice(0, this.rows).map((score, index) => ({ ...score, place: index + 1 }))
             console.log(scores)
           })
           setTimeout(this.loadScores.bind(this), (this.fetchinterval || 60) * 1000)
